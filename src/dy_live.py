@@ -183,7 +183,8 @@ def unPackWebcastGiftMessage(data):
         GlobalVal.gift_num += int(data.get("totalCount", 1))
         GlobalVal.gift_value += (int(data["gift"]["diamondCount"]) * int(data.get("totalCount", 1)))
         # 将消息发送到我们自己的服务器:websocket链接
-        ws_sender(f"收到礼物: {gift_name}，礼物数量:{GlobalVal.gift_num}，礼物价值: {GlobalVal.gift_value}")
+        # ws_sender(f"收到礼物: {gift_name}，礼物数量:{GlobalVal.gift_num}，礼物价值: {GlobalVal.gift_value}")
+        print(f'收到 {nick_name} 的 《 {gift_name} 》 x {int(data.get("totalCount", 1))} , 价值: {int(data["gift"]["diamondCount"]) * int(data.get("totalCount", 1))} **** 累计收到礼物: 礼物数量:{GlobalVal.gift_num}，礼物价值: {GlobalVal.gift_value}')
     except Exception as e:
         logger.error(f"解析礼物数据出错: {e}")
     log = json.dumps(data, ensure_ascii=False)
@@ -202,6 +203,7 @@ def unPackWebcastMemberMessage(data):
     member_num = int(data.get("memberCount", 0))
     log = json.dumps(data, ensure_ascii=False)
     logger.info(f'[unPackWebcastMemberMessage] [直播间成员加入: {member_num}] [房间Id：' + liveRoomId + '] | ' + log)
+    print(f"直播间成员加入:  {member_num}")
     return data
 
 
@@ -381,8 +383,9 @@ def parseLiveRoomUrl(url):
         res_stream_flv = res_stream_flv.replace("http", "https")
     logger.info(f"直播流FLV地址是: {res_stream_flv}")
     print(f"直播流FLV地址是: {res_stream_flv}")
+    
     # 开始获取直播间排行
-    live_rank.interval_rank(liveRoomId)
+    # live_rank.interval_rank(liveRoomId)
 
     USER_UNIQUE_ID = get_user_unique_id()
     VERSION_CODE = 180800

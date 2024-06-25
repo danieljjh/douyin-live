@@ -4,3 +4,5 @@ bin/*
 venv
 log.txt
 *.pyc
+logs/*
+.DS_Store

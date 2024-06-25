@@ -1,7 +1,14 @@
 import logging
 import os
+import datetime as dt
 
-from config import LOG_FILE_SAVE, LOG_FILE_NAME, LOG_LEVEL
+from config import LOG_FILE_SAVE, LOG_LEVEL, LIVE_ROOM_URL
+
+currtime = dt.datetime.now()
+if "647384584800" in LIVE_ROOM_URL:
+    LOG_FILE_NAME = f"logs/ly/log-ly_{dt.datetime.strftime(currtime, '%Y-%m-%d %H-%M')}.txt"
+else:
+    LOG_FILE_NAME = f"logs/other/log-other_{dt.datetime.strftime(currtime, '%Y-%m-%d %H-%M')}.txt"
 
 # 第一步：创建文件日志对象
 logger = logging.getLogger()
@@ -13,14 +20,14 @@ if LOG_FILE_SAVE:
     logging.basicConfig(level=LOG_LEVEL, format=file_fmt, filename=file_path, filemode="a", encoding="utf-8")
 # else:
 #     logging.basicConfig(level=LOG_LEVEL, format=file_fmt)
-console_handler = logging.StreamHandler()
+# console_handler = logging.StreamHandler()
 # 第三步：添加控制台文本处理器
-console_handler.setLevel(level=LOG_LEVEL)
-console_fmt = "%(asctime)s - %(levelname)s - %(message)s"
-fmt1 = logging.Formatter(fmt=console_fmt)
-console_handler.setFormatter(fmt=fmt1)
+# console_handler.setLevel(level=LOG_LEVEL)
+# console_fmt = "%(asctime)s - %(levelname)s - %(message)s"
+# fmt1 = logging.Formatter(fmt=console_fmt)
+# console_handler.setFormatter(fmt=fmt1)
 # 第四步：将控制台日志器、文件日志器，添加进日志器对象中
-logger.addHandler(console_handler)
+# logger.addHandler(console_handler)
 
 if __name__ == '__main__':
     logger.info("这是一条info消息")

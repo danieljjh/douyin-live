@@ -23,8 +23,8 @@ def sender():
         'Content-Type': 'application/json'
     }
     # print(f"推送的直播数据是:{payload}")
-    response = requests.request("POST", LIVE_WEB_SEND_URL, headers=headers, data=payload)
-    print(f"HTTP推送消息结果: {response.json()}")
+    # response = requests.request("POST", LIVE_WEB_SEND_URL, headers=headers, data=payload)
+    # print(f"HTTP推送消息结果: {response.json()}")
 
 
 def http_send():
@@ -35,7 +35,7 @@ def http_send():
         try:
             sender()
         except Exception as e:
-            print(f"推送直播数据出错：如果你不用将直播数据推送到你们的服务器上，可以忽略此提示")
+            print(f"推送直播数据出错：如果你不用将直播数据推送到你们的服务器上，可以忽略此提示", e)
 
 
 def send_start():
