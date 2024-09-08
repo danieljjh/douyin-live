@@ -23,10 +23,11 @@ def get_rank(room_id):
         'Cookie': 'msToken=SIGjc0nNMCGoBKHwLG2P62wNZehUUEEl1C7DDnOMwjjXUKgF_rFDBLBSqRe6YOnxl3c-tDmAlF7-W3pbYJ8mTxZYfYrLZyK9Q7znbNcuWbfzPBBVNdhEQoOlrakh'
     }
     response = requests.request("GET", url, headers=headers, data=payload)
+    # print("response", response.json())
     rank_list = response.json()
     # logger.info(f"[liveRankList] 直播间在线观众排名: {rank_list}")
     # 获取前三名然后只要昵称数据和排名
-    ranks_list = rank_list.get("data").get("ranks")[:4]
+    ranks_list = rank_list.get("data").get("ranks")[:]
     ranks_three = []
     for rank in ranks_list:
         ranks_three.append({
@@ -36,7 +37,8 @@ def get_rank(room_id):
     # 判断是否存在排名，不存在就是空
     GlobalVal.rank_user = ranks_three
     logger.info(f"更新打赏排行: {ranks_three}")
-    print(f"更新打赏排行: {ranks_three}")
+    print(f"打赏排行 No: {(ranks_three[:10])}")
+    print(f"在线打赏人数 No: {len(ranks_three)}")
 
 
 def handle_rank(roo_id, delay):
@@ -44,7 +46,8 @@ def handle_rank(roo_id, delay):
         try:
             get_rank(roo_id)
         except Exception as e:
-            print(f"推送打赏排名出错:{e}")
+            # print(f"推送打赏排名出错:{e}")
+            pass
         time.sleep(delay)
 
 

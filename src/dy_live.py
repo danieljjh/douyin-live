@@ -159,6 +159,7 @@ def unPackWebcastChatMessage(data):
     chatMessage.ParseFromString(data)
     data = json_format.MessageToDict(chatMessage, preserving_proto_field_name=True)
     log = json.dumps(data, ensure_ascii=False)
+    print(f" ** Chat ** : {data['user']['nickName']}: {data['content']}")
     logger.info(
         f'[unPackWebcastChatMessage] [直播间弹幕消息{GlobalVal.commit_num}] [房间Id：' + liveRoomId + '] | ' + log)
     return data
@@ -242,6 +243,9 @@ def sendAck(ws, logId, internalExt):
 
 def onError(ws, error):
     logger.error('[onError] [webSocket Error事件] [房间Id：' + liveRoomId + ']')
+    # dan restart ws server
+    time.sleep(5)
+    wssServerStart(wss_url_global)
 
 
 def onClose(ws, a, b):
@@ -346,7 +350,7 @@ def parseLiveRoomUrl(url):
         'user-agent': USER_AGENT
     }
     res = requests.get(url=url, headers=headers)
-    global ttwid, roomStore, liveRoomId, liveRoomTitle, live_stream_url
+    global ttwid, roomStore, liveRoomId, liveRoomTitle, live_stream_url, wss_url_global
     data = res.cookies.get_dict()
     ttwid = data['ttwid']
     res = res.text
@@ -385,7 +389,7 @@ def parseLiveRoomUrl(url):
     print(f"直播流FLV地址是: {res_stream_flv}")
     
     # 开始获取直播间排行
-    # live_rank.interval_rank(liveRoomId)
+    live_rank.interval_rank(liveRoomId)
 
     USER_UNIQUE_ID = get_user_unique_id()
     VERSION_CODE = 180800
@@ -436,6 +440,7 @@ def parseLiveRoomUrl(url):
     }
     wss_url = f"wss://webcast5-ws-web-lf.douyin.com/webcast/im/push/v2/?{'&'.join([f'{k}={v}' for k, v in webcast5_params.items()])}"
     wss_url = build_request_url(wss_url)
+    wss_url_global = wss_url
     wssServerStart(wss_url)
 
 
