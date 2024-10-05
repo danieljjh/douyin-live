@@ -17,7 +17,7 @@ LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 # LIVE_ROOM_URL = "https://live.douyin.com/192990287232" # 麦穗
 # LIVE_ROOM_URL ="https://live.douyin.com/804716855135" # test  2
 # LIVE_ROOM_URL = "https://live.douyin.com/813785538484"  # 影子
-LIVE_ROOM_URL = "https://live.douyin.com/905470601867?" # test  lao tou
+LIVE_ROOM_URL = "https://live.douyin.com/905470601867?"  # test  老頭
 # LIVE_ROOM_URL = "https://live.douyin.com/647384584800"   # 乐瑶
 
 # 特殊礼物单独统计
